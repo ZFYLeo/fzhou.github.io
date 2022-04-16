@@ -3,7 +3,7 @@
   <entry>
     <title>GNU Radio 3.10 OOT(c++basic)</title>
     <url>/2022/04/16/OOT-tutorial/</url>
-    <content><![CDATA[<p>GNU Radio 3.10 create OOT<br>Refered blog <a href="https://blog.csdn.net/Flag_ing/article/details/118568932">GNU Radio3.8创建OOT的详细过程(基础&#x2F;C++)</a></p>
+    <content><![CDATA[<p>GNU Radio 3.10 create OOT<br>Refered blog <a href="https://blog.csdn.net/Flag_ing/article/details/118568932">GNU Radio3.8创建OOT的详细过程(基础&#x2F;C++)</a><br>and <a href="https://blog.csdn.net/qq_41300075/article/details/121411905">Gnuradio(3.10)创建OOT自定义模块</a></p>
 <span id="more"></span>
 
 <ol>
@@ -50,6 +50,10 @@ Then you can find a file dictionary, and u will find<br>apps&#x2F;, cmake&#x2F;,
 </li>
 </ol>
 ]]></content>
+      <categories>
+        <category>gnuradio</category>
+        <category>OOT</category>
+      </categories>
       <tags>
         <tag>gnuradio</tag>
         <tag>OOT</tag>
