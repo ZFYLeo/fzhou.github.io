@@ -10,6 +10,17 @@
 <img src="/2022/04/28/OOT-problems/out_of_sync_error.png" class="" title="out_of_sync_error">
 <p>Then you need to run the following command to rebind the module. An important thing is that someone will run this command under <strong>&#x2F;build</strong> path because they always run the <strong>&#x2F;build$ make</strong> command there, then the block not found error will occur. Therefore, you need to run the command out of the build file path.</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">~/modulename$ gr_modtool bind blockName</span><br></pre></td></tr></table></figure>
+<h3 id="2-OOT-bladerf-source-install-problems"><a href="#2-OOT-bladerf-source-install-problems" class="headerlink" title="2. OOT bladerf source install problems"></a>2. OOT bladerf source install problems</h3><p>When I want to install the self-defined bladeRF source block, I found the problems below</p>
+<img src="/2022/04/28/OOT-problems/rf1.png" class="" title="bladerf_problem">
+<p>and the actual problem is that</p>
+<img src="/2022/04/28/OOT-problems/rf2.png" class="" title="bladerf_problem_actual">
+<p>To solve this problem, install the libbladerf-dev packet</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get install libbladerf-dev</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-OOT-cant-be-found-in-Gnuradio-after-installation"><a href="#3-OOT-cant-be-found-in-Gnuradio-after-installation" class="headerlink" title="3. OOT cant be found in Gnuradio after installation"></a>3. OOT cant be found in Gnuradio after installation</h3><p>That may because you delete the build directory directly or the install path is not in your gnuradio block path.<br>You can switch the path by cmake command</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cmake -DCMAKE_INSTALL_PREFIX=/opt/gnuradio/pybombs …/</span><br></pre></td></tr></table></figure>
+<p>or use to switch. Emmmm I am not sure about this way but I did once and its full of mass.</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">source ~/gnuradio/setup_env.sh</span><br></pre></td></tr></table></figure>
 
 ]]></content>
       <categories>
