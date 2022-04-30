@@ -21,7 +21,8 @@
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cmake -DCMAKE_INSTALL_PREFIX=/opt/gnuradio/pybombs …/</span><br></pre></td></tr></table></figure>
 <p>or use to switch. Emmmm I am not sure about this way but I did once and its full of mass.</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">source ~/gnuradio/setup_env.sh</span><br></pre></td></tr></table></figure>
-
+<h3 id="4-Import-OOT-module-error"><a href="#4-Import-OOT-module-error" class="headerlink" title="4. Import OOT module error"></a>4. Import OOT module error</h3><img src="/2022/04/28/OOT-problems/import_error.png" class="" title="bladerf_problem">
+<p>This kind of error can be forget to run <strong>sudo ldconfig</strong> after installation</p>
 ]]></content>
       <categories>
         <category>gnuradio</category>

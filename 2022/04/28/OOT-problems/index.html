@@ -30,8 +30,9 @@
 <meta property="og:image" content="http://example.com/2022/04/28/OOT-problems/out_of_sync_error.png">
 <meta property="og:image" content="http://example.com/2022/04/28/OOT-problems/rf1.png">
 <meta property="og:image" content="http://example.com/2022/04/28/OOT-problems/rf2.png">
+<meta property="og:image" content="http://example.com/2022/04/28/OOT-problems/import_error.png">
 <meta property="article:published_time" content="2022-04-28T13:46:48.000Z">
-<meta property="article:modified_time" content="2022-04-28T19:49:26.866Z">
+<meta property="article:modified_time" content="2022-04-30T15:21:03.217Z">
 <meta property="article:author" content="FZ">
 <meta property="article:tag" content="gnuradio">
 <meta property="article:tag" content="OOT">
@@ -218,10 +219,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2022-04-28 15:46:48 / 修改时间：21:49:26" itemprop="dateCreated datePublished" datetime="2022-04-28T15:46:48+02:00">2022-04-28</time>
+              <time title="创建时间：2022-04-28 15:46:48" itemprop="dateCreated datePublished" datetime="2022-04-28T15:46:48+02:00">2022-04-28</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-04-30 17:21:03" itemprop="dateModified" datetime="2022-04-30T17:21:03+02:00">2022-04-30</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -265,7 +272,8 @@
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cmake -DCMAKE_INSTALL_PREFIX=/opt/gnuradio/pybombs …/</span><br></pre></td></tr></table></figure>
 <p>or use to switch. Emmmm I am not sure about this way but I did once and its full of mass.</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source ~/gnuradio/setup_env.sh</span><br></pre></td></tr></table></figure>
-
+<h3 id="4-Import-OOT-module-error"><a href="#4-Import-OOT-module-error" class="headerlink" title="4. Import OOT module error"></a>4. Import OOT module error</h3><img src="/2022/04/28/OOT-problems/import_error.png" class="" title="bladerf_problem">
+<p>This kind of error can be forget to run <strong>sudo ldconfig</strong> after installation</p>
 
     </div>
 
@@ -348,7 +356,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-Fix-input-parameters-after-creating-an-OOT"><span class="nav-number">1.</span> <span class="nav-text">1. Fix input parameters after creating an OOT</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-OOT-bladerf-source-install-problems"><span class="nav-number">2.</span> <span class="nav-text">2. OOT bladerf source install problems</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-OOT-cant-be-found-in-Gnuradio-after-installation"><span class="nav-number">3.</span> <span class="nav-text">3. OOT cant be found in Gnuradio after installation</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-Fix-input-parameters-after-creating-an-OOT"><span class="nav-number">1.</span> <span class="nav-text">1. Fix input parameters after creating an OOT</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-OOT-bladerf-source-install-problems"><span class="nav-number">2.</span> <span class="nav-text">2. OOT bladerf source install problems</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-OOT-cant-be-found-in-Gnuradio-after-installation"><span class="nav-number">3.</span> <span class="nav-text">3. OOT cant be found in Gnuradio after installation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-Import-OOT-module-error"><span class="nav-number">4.</span> <span class="nav-text">4. Import OOT module error</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
