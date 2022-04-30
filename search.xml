@@ -1,40 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>OOT problems</title>
-    <url>/2022/04/28/OOT-problems/</url>
-    <content><![CDATA[<p>GNU Radio 3.10<br>Include some OOT problems.<br>Refered blog <a href="https://blog.csdn.net/Flag_ing/article/details/121008197?spm=1001.2014.3001.5501">GNU Radio3.8 常见的OOT问题</a></p>
-<span id="more"></span>
-
-<h3 id="1-Fix-input-parameters-after-creating-an-OOT"><a href="#1-Fix-input-parameters-after-creating-an-OOT" class="headerlink" title="1. Fix input parameters after creating an OOT"></a>1. Fix input parameters after creating an OOT</h3><p>When an OOT block is generated, we may want to fix it’s input parameters. The file you need to fix can be found in this <a href="https://zfyleo.github.io/2022/04/16/OOT-tutorial/#more">blog</a>. But when you fix the file in <strong>&#x2F;include&#x2F;gnuradio&#x2F;moduleName&#x2F;blockname.h</strong>,<br>you will meet the problems while doing the <strong>&#x2F;build$ make</strong> command, which can be seen in the picture below.</p>
-<img src="/2022/04/28/OOT-problems/out_of_sync_error.png" class="" title="out_of_sync_error">
-<p>Then you need to run the following command to rebind the module. An important thing is that someone will run this command under <strong>&#x2F;build</strong> path because they always run the <strong>&#x2F;build$ make</strong> command there, then the block not found error will occur. Therefore, you need to run the command out of the build file path.</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">~/modulename$ gr_modtool bind blockName</span><br></pre></td></tr></table></figure>
-<h3 id="2-OOT-bladerf-source-install-problems"><a href="#2-OOT-bladerf-source-install-problems" class="headerlink" title="2. OOT bladerf source install problems"></a>2. OOT bladerf source install problems</h3><p>When I want to install the self-defined bladeRF source block, I found the problems below</p>
-<img src="/2022/04/28/OOT-problems/rf1.png" class="" title="bladerf_problem">
-<p>and the actual problem is that</p>
-<img src="/2022/04/28/OOT-problems/rf2.png" class="" title="bladerf_problem_actual">
-<p>To solve this problem, install the libbladerf-dev packet</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get install libbladerf-dev</span><br></pre></td></tr></table></figure>
-
-<h3 id="3-OOT-cant-be-found-in-Gnuradio-after-installation"><a href="#3-OOT-cant-be-found-in-Gnuradio-after-installation" class="headerlink" title="3. OOT cant be found in Gnuradio after installation"></a>3. OOT cant be found in Gnuradio after installation</h3><p>That may because you delete the build directory directly or the install path is not in your gnuradio block path.<br>You can switch the path by cmake command</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cmake -DCMAKE_INSTALL_PREFIX=/opt/gnuradio/pybombs …/</span><br></pre></td></tr></table></figure>
-<p>or use to switch. Emmmm I am not sure about this way but I did once and its full of mass.</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">source ~/gnuradio/setup_env.sh</span><br></pre></td></tr></table></figure>
-<h3 id="4-Import-OOT-module-error"><a href="#4-Import-OOT-module-error" class="headerlink" title="4. Import OOT module error"></a>4. Import OOT module error</h3><img src="/2022/04/28/OOT-problems/import_error.png" class="" title="bladerf_problem">
-<p>This kind of error can be forget to run <strong>sudo ldconfig</strong> after installation</p>
-]]></content>
-      <categories>
-        <category>gnuradio</category>
-        <category>OOT</category>
-      </categories>
-      <tags>
-        <tag>gnuradio</tag>
-        <tag>OOT</tag>
-        <tag>c++</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>GNU Radio 3.10 OOT(c++basic)</title>
     <url>/2022/04/16/OOT-tutorial/</url>
     <content><![CDATA[<p>GNU Radio 3.10 create OOT<br>Refered blog <a href="https://blog.csdn.net/Flag_ing/article/details/118568932">GNU Radio3.8创建OOT的详细过程(基础&#x2F;C++)</a><br>and <a href="https://blog.csdn.net/qq_41300075/article/details/121411905">Gnuradio(3.10)创建OOT自定义模块</a></p>
@@ -79,6 +45,40 @@
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">static sptr make(type parameter1, type parameter2);</span><br></pre></td></tr></table></figure>
 <p><strong>&#x2F;grc&#x2F;newmod.yml</strong></p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">templates:</span><br><span class="line">  imports: from gnuradio import mymod</span><br><span class="line">  make: mymod.square2_ff($&#123;parameter1&#125;, $&#123;parameter2]&#125;)</span><br><span class="line"></span><br><span class="line">#  Make one &#x27;parameters&#x27; list entry for every parameter you want settable from the GUI.</span><br><span class="line">#     Keys include:</span><br><span class="line">#     * id (makes the value accessible as keyname, e.g. in the make entry)</span><br><span class="line">#     * label (label shown in the GUI)</span><br><span class="line">#     * dtype (e.g. int, float, complex, byte, short, xxx_vector, ...)</span><br><span class="line">#     * default</span><br><span class="line">parameters:</span><br><span class="line">- id: parametername_replace_me</span><br><span class="line">  label: FIX ME:</span><br><span class="line">  dtype: string</span><br><span class="line">  default: You need to fill in your grc/mymod_square2_ff.block.yaml</span><br><span class="line">#- id: ...</span><br><span class="line">#  label: ...</span><br><span class="line">#  dtype: ...</span><br><span class="line"></span><br><span class="line">#  Make one &#x27;inputs&#x27; list entry per input and one &#x27;outputs&#x27; list entry per output.</span><br><span class="line">#  Keys include:</span><br><span class="line">#      * label (an identifier for the GUI)</span><br><span class="line">#      * domain (optional - stream or message. Default is stream)</span><br><span class="line">#      * dtype (e.g. int, float, complex, byte, short, xxx_vector, ...)</span><br><span class="line">#      * vlen (optional - data stream vector length. Default is 1)</span><br><span class="line">#      * optional (optional - set to 1 for optional inputs. Default is 0)</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>gnuradio</category>
+        <category>OOT</category>
+      </categories>
+      <tags>
+        <tag>gnuradio</tag>
+        <tag>OOT</tag>
+        <tag>c++</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>OOT problems</title>
+    <url>/2022/04/28/OOT-problems/</url>
+    <content><![CDATA[<p>GNU Radio 3.10<br>Include some OOT problems.<br>Refered blog <a href="https://blog.csdn.net/Flag_ing/article/details/121008197?spm=1001.2014.3001.5501">GNU Radio3.8 常见的OOT问题</a></p>
+<span id="more"></span>
+
+<h3 id="1-Fix-input-parameters-after-creating-an-OOT"><a href="#1-Fix-input-parameters-after-creating-an-OOT" class="headerlink" title="1. Fix input parameters after creating an OOT"></a>1. Fix input parameters after creating an OOT</h3><p>When an OOT block is generated, we may want to fix it’s input parameters. The file you need to fix can be found in this <a href="https://zfyleo.github.io/2022/04/16/OOT-tutorial/#more">blog</a>. But when you fix the file in <strong>&#x2F;include&#x2F;gnuradio&#x2F;moduleName&#x2F;blockname.h</strong>,<br>you will meet the problems while doing the <strong>&#x2F;build$ make</strong> command, which can be seen in the picture below.</p>
+<img src="/2022/04/28/OOT-problems/out_of_sync_error.png" class="" title="out_of_sync_error">
+<p>Then you need to run the following command to rebind the module. An important thing is that someone will run this command under <strong>&#x2F;build</strong> path because they always run the <strong>&#x2F;build$ make</strong> command there, then the block not found error will occur. Therefore, you need to run the command out of the build file path.</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">~/modulename$ gr_modtool bind blockName</span><br></pre></td></tr></table></figure>
+<h3 id="2-OOT-bladerf-source-install-problems"><a href="#2-OOT-bladerf-source-install-problems" class="headerlink" title="2. OOT bladerf source install problems"></a>2. OOT bladerf source install problems</h3><p>When I want to install the self-defined bladeRF source block, I found the problems below</p>
+<img src="/2022/04/28/OOT-problems/rf1.png" class="" title="bladerf_problem">
+<p>and the actual problem is that</p>
+<img src="/2022/04/28/OOT-problems/rf2.png" class="" title="bladerf_problem_actual">
+<p>To solve this problem, install the libbladerf-dev packet</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get install libbladerf-dev</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-OOT-cant-be-found-in-Gnuradio-after-installation"><a href="#3-OOT-cant-be-found-in-Gnuradio-after-installation" class="headerlink" title="3. OOT cant be found in Gnuradio after installation"></a>3. OOT cant be found in Gnuradio after installation</h3><p>That may because you delete the build directory directly or the install path is not in your gnuradio block path.<br>You can switch the path by cmake command</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cmake -DCMAKE_INSTALL_PREFIX=/opt/gnuradio/pybombs …/</span><br></pre></td></tr></table></figure>
+<p>or use to switch. Emmmm I am not sure about this way but I did once and its full of mass.</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">source ~/gnuradio/setup_env.sh</span><br></pre></td></tr></table></figure>
+<h3 id="4-Import-OOT-module-error"><a href="#4-Import-OOT-module-error" class="headerlink" title="4. Import OOT module error"></a>4. Import OOT module error</h3><img src="/2022/04/28/OOT-problems/import_error.png" class="" title="bladerf_problem">
+<p>This kind of error can be forget to run <strong>sudo ldconfig</strong> after installation</p>
 ]]></content>
       <categories>
         <category>gnuradio</category>
