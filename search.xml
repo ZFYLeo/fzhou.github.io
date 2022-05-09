@@ -147,4 +147,23 @@
 <p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
 ]]></content>
   </entry>
+  <entry>
+    <title>bladeRF_commands</title>
+    <url>/2022/05/09/bladeRF-commands/</url>
+    <content><![CDATA[<p>bladeRF commands used for saving samples</p>
+<span id="more"></span>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">set frequency rx 2411.5M</span><br><span class="line">set samplerate rx 61.44M</span><br><span class="line">set bandwidth rx 56M</span><br><span class="line">set agc off</span><br><span class="line">set gain rx1 60</span><br><span class="line">rx config file=distance/250.bin format=bin n=10M channel=1</span><br><span class="line">rx start</span><br><span class="line">rx wait</span><br></pre></td></tr></table></figure>
+<p>Run following command to run the script</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">bladeRF-cli -s scriptname</span><br></pre></td></tr></table></figure>
+<p>The data can be read</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">f = np.fromfile(filename, dtype=np.int16)</span><br><span class="line">signal_i = f[::2] / 2048.0</span><br><span class="line">signal_q = f[1::2] / 2048.0</span><br><span class="line">f = signal_i +1j*signal_q</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>bladeRF</category>
+      </categories>
+      <tags>
+        <tag>bladeRF</tag>
+      </tags>
+  </entry>
 </search>
