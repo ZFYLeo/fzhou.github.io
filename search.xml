@@ -35,6 +35,33 @@
       </tags>
   </entry>
   <entry>
+    <title>bladeRF_commands</title>
+    <url>/2022/05/09/bladeRF-commands/</url>
+    <content><![CDATA[<p>bladeRF commands used for saving samples</p>
+<span id="more"></span>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">set frequency rx 2411.5M</span><br><span class="line">set samplerate rx 61.44M</span><br><span class="line">set bandwidth rx 56M</span><br><span class="line">set agc off</span><br><span class="line">set gain rx1 60</span><br><span class="line">rx config file=distance/250.bin format=bin n=10M channel=1</span><br><span class="line">rx start</span><br><span class="line">rx wait</span><br></pre></td></tr></table></figure>
+<p>Run following command to run the script</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">bladeRF-cli -s scriptname</span><br></pre></td></tr></table></figure>
+<p>The data can be read</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">f = np.fromfile(filename, dtype=np.int16)</span><br><span class="line">signal_i = f[::2] / 2048.0</span><br><span class="line">signal_q = f[1::2] / 2048.0</span><br><span class="line">f = signal_i +1j*signal_q</span><br></pre></td></tr></table></figure>
+
+<h3 id="load-fpga"><a href="#load-fpga" class="headerlink" title="load fpga"></a>load fpga</h3><p>Download fpga bit stream <a href="https://www.nuand.com/fpga_images/">https://www.nuand.com/fpga_images/</a></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">bladeRF-cli -l ./Downloads/hostedxA9-latest.rbf</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>Insufficient permission<br>There are two ways to solve it, the first one is to find the usb port<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ lsusb</span><br><span class="line">...</span><br><span class="line">Bus 003 Device 018: ID 16c0:05dc Van Ooijen Technische Informatica shared ID for use with libusb</span><br><span class="line">...</span><br><span class="line">$ ls -al /dev/bus/usb/003/018</span><br><span class="line">crw-rw-r-- 1 root root 189, 273 23. Aug 11:23 /dev/bus/usb/003/018</span><br></pre></td></tr></table></figure>
+Then run<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ sudo chmod 666 /dev/bus/usb/003/018</span><br></pre></td></tr></table></figure>
+Another permanent way to avoid sudo command is to create a 88-nuand.rules file in etc&#x2F;udev&#x2F;rules.d&#x2F; .<br>Well I dont know if the file name is important.<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># Nuand bladeRF</span><br><span class="line">ATTR&#123;idVendor&#125;==&quot;2cf0&quot;, ATTR&#123;idProduct&#125;==&quot;5246&quot;, MODE=&quot;660&quot;, GROUP=&quot;plugdev&quot;</span><br><span class="line">ATTR&#123;idVendor&#125;==&quot;2cf0&quot;, ATTR&#123;idProduct&#125;==&quot;5250&quot;, MODE=&quot;660&quot;, GROUP=&quot;plugdev&quot;</span><br><span class="line"></span><br><span class="line"># Nuand bladeRF, legacy VID/PID</span><br><span class="line">ATTR&#123;idVendor&#125;==&quot;1d50&quot;, ATTR&#123;idProduct&#125;==&quot;6066&quot;, MODE=&quot;660&quot;, GROUP=&quot;plugdev&quot;</span><br><span class="line"></span><br><span class="line"># Cypress Bootloader</span><br><span class="line">ATTR&#123;idVendor&#125;==&quot;04b4&quot;, ATTR&#123;idProduct&#125;==&quot;00f3&quot;, MODE=&quot;660&quot;, GROUP=&quot;plugdev&quot;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+The second might be the importance I think but anyway, add all of them is find.<br>Then run<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo udevadm control --reload-rules</span><br></pre></td></tr></table></figure></li>
+</ol>
+]]></content>
+      <categories>
+        <category>bladeRF</category>
+      </categories>
+      <tags>
+        <tag>bladeRF</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>GNU Radio 3.10 OOT(c++basic)</title>
     <url>/2022/04/16/OOT-tutorial/</url>
     <content><![CDATA[<p>GNU Radio 3.10 create OOT<br>Refered blog <a href="https://blog.csdn.net/Flag_ing/article/details/118568932">GNU Radio3.8创建OOT的详细过程(基础&#x2F;C++)</a><br>and <a href="https://blog.csdn.net/qq_41300075/article/details/121411905">Gnuradio(3.10)创建OOT自定义模块</a></p>
@@ -114,11 +141,20 @@
     <content><![CDATA[<p>Install Ubuntu 22.04 + Gnuradio 3.10</p>
 <span id="more"></span>
 <ol>
-<li>Install Dependencies<br>Install dependencies from <a href="https://wiki.gnuradio.org/index.php/UbuntuInstall">https://wiki.gnuradio.org/index.php/UbuntuInstall</a></li>
-<li>Install gnuradio by Pybombs<br>The installation process can be <a href="https://github.com/gnuradio/pybombs">here</a><br>The importance thing need to noticed is that the receipt need to changed in order to install gnuradio 3.10<br>First, go to ~&#x2F;.pybombs&#x2F;recipes&#x2F;gr-recipes&#x2F;gnuradio39.lwr and replace maint-3.9 to maint-3.10<br>Second<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">pybombs prefix init ~/prefix-3.8 -R gnuradio-default</span><br></pre></td></tr></table></figure>
-~&#x2F;prefix-3.8 is the path where you install gnuradio3.10 while gnuradio-default is the receipt representing the version of gnuradio you install<br>So, we need to fixed the receipt as<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">pybombs prefix init ~/prefix-3.8 -R gnuradio39</span><br></pre></td></tr></table></figure></li>
-<li>Install pybind11<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo apt-get install pybind11-dev</span><br></pre></td></tr></table></figure></li>
+<li><p>Install Dependencies<br>Install dependencies from <a href="https://wiki.gnuradio.org/index.php/UbuntuInstall">https://wiki.gnuradio.org/index.php/UbuntuInstall</a></p>
+</li>
+<li><p>Install gnuradio by Pybombs<br>The installation process can be <a href="https://github.com/gnuradio/pybombs">here</a><br>The importance thing need to noticed is that the receipt need to changed in order to install gnuradio 3.10<br>First, go to ~&#x2F;.pybombs&#x2F;recipes&#x2F;gr-recipes&#x2F;gnuradio39.lwr and replace maint-3.9 to maint-3.10<br>Second</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">pybombs prefix init ~/prefix-3.8 -R gnuradio-default</span><br></pre></td></tr></table></figure>
+<p>~&#x2F;prefix-3.8 is the path where you install gnuradio3.10 while gnuradio-default is the receipt representing the version of gnuradio you install<br>So, we need to fixed the receipt as</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">pybombs prefix init ~/prefix-3.8 -R gnuradio39</span><br></pre></td></tr></table></figure></li>
+<li><p>Install pybind11</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo apt-get install pybind11-dev</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>ModuleNotFoundError gnuradio<br>When meet gnuradio not found error. There is an answer on the net but it seems doesn’t work with the newest gnuradio 3.10<br>if you use pybombs to install.<br>The normal way can be checked <a href="https://wiki.gnuradio.org/index.php/ModuleNotFoundError">here</a><br>But right now I can find nothing with the step 1 and I found the gnuradio module seems to be installed into another path.<br>For example, my prefix is ~&#x2F;gr310 but the gnuradio module in installed into ~&#x2F;lib.So you can check the path into it and add this path to ~&#x2F;gr310&#x2F;setup.env.sh</p>
+</li>
 </ol>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">export PYTHONPATH=&quot;/home/dev/lib/python3/site-package:$PYTHONPATH&quot;</span><br></pre></td></tr></table></figure>
+<p>Done.</p>
 ]]></content>
       <categories>
         <category>gnuradio</category>
@@ -146,24 +182,5 @@
 
 <p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
 ]]></content>
-  </entry>
-  <entry>
-    <title>bladeRF_commands</title>
-    <url>/2022/05/09/bladeRF-commands/</url>
-    <content><![CDATA[<p>bladeRF commands used for saving samples</p>
-<span id="more"></span>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">set frequency rx 2411.5M</span><br><span class="line">set samplerate rx 61.44M</span><br><span class="line">set bandwidth rx 56M</span><br><span class="line">set agc off</span><br><span class="line">set gain rx1 60</span><br><span class="line">rx config file=distance/250.bin format=bin n=10M channel=1</span><br><span class="line">rx start</span><br><span class="line">rx wait</span><br></pre></td></tr></table></figure>
-<p>Run following command to run the script</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">bladeRF-cli -s scriptname</span><br></pre></td></tr></table></figure>
-<p>The data can be read</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">f = np.fromfile(filename, dtype=np.int16)</span><br><span class="line">signal_i = f[::2] / 2048.0</span><br><span class="line">signal_q = f[1::2] / 2048.0</span><br><span class="line">f = signal_i +1j*signal_q</span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>bladeRF</category>
-      </categories>
-      <tags>
-        <tag>bladeRF</tag>
-      </tags>
   </entry>
 </search>
